@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
 
     ViewPager pager;
     PagerAdapter pagerAdapter;
+    static FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +57,16 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new ChatsEventsRequestsActivity(selected);
+                //fragment = new ChatsEventsRequestsActivity(selected);
+                fragment = new MyEvents();
                 break;
             default:
                 break;
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_frame, fragment).commit();
+            fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         } else {
             Log.e(this.getClass().getName(), "Error. Fragment is not created");
         }

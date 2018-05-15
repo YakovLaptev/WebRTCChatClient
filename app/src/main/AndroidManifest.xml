@@ -14,6 +14,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name">
+            <intent-filter android:order="1">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="yakovlaptev.com"
+                    android:pathPattern="/.*"
+                    android:scheme="https" />
+            </intent-filter>
+
+
+        </activity>
+        <activity
             android:name=".EmailPasswordActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateAlwaysHidden">
@@ -49,23 +66,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/app_name">
-            <intent-filter android:order="1">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="yakovlaptev.com"
-                    android:pathPattern="/.*"
-                    android:scheme="https" />
-            </intent-filter>
 
         </activity>
+
    <!--     <activity android:name=".MyEvents">
             <intent-filter android:order="1">
                 <action android:name="android.intent.action.VIEW" />

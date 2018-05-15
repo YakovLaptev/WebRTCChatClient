@@ -15,6 +15,7 @@ public class ChatsEventsRequestsActivity extends Fragment {
     private ViewPager mViewPager;
     private int selected;
 
+
     @SuppressLint("ValidFragment")
     public ChatsEventsRequestsActivity(int selected) {
         this.selected = selected;
