@@ -1,7 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
+
+Properties signingProps = null
 
 android {
     compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
     defaultConfig {
         applicationId "com.yakovlaptev.vkr"
         minSdkVersion 22
@@ -10,10 +15,30 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    def signingPropsFile = System.getenv('SIGNING_PROPERTIES')
+    if (signingPropsFile && new File(signingPropsFile).exists()) {
+        signingProps = new Properties()
+        signingProps.load(new FileInputStream(file(signingPropsFile)))
+
+        signingConfigs {
+            release {
+                storeFile file(signingProps['keystore'])
+                storePassword signingProps['keystore.password']
+                keyAlias signingProps['key.alias']
+                keyPassword signingProps['key.password']
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            if(signingProps) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
@@ -29,6 +54,7 @@ configurations.all {
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:multidex:1.0.3'
 
@@ -54,3 +80,10 @@ dependencies {
 
     apply plugin: 'com.google.gms.google-services'
 
+play {
+    if(signingProps) {
+        track = 'production'
+        serviceAccountEmail = signingProps['service.account.email']
+        pk12File = file(signingProps['service.account.pk12file'])
+    }
+}

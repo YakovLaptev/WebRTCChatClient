@@ -1,5 +1,6 @@
 package com.yakovlaptev.vkr;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -31,10 +32,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +59,10 @@ public class MainActivity extends AppCompatActivity
         switch (position) {
             case 0:
                 //fragment = new ChatsEventsRequestsActivity(selected);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("my_events", selected == 0);
                 fragment = new MyEvents();
+                fragment.setArguments(bundle);
                 break;
             default:
                 break;
@@ -113,13 +117,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_users) {
 
         } else if (id == R.id.nav_events) {
-
+            selectItem(0,1);
         } else if (id == R.id.nav_my_chats) {
-
+            startActivity(new Intent(this, VideoChatActivity.class));
         } else if (id == R.id.nav_my_events) {
             selectItem(0,0);
         } else if (id == R.id.nav_my_requests) {
-            selectItem(0,1);
+            //selectItem(0,1);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

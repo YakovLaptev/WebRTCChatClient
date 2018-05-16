@@ -68,6 +68,11 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".VideoChatActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize">
+        </activity>
 
    <!--     <activity android:name=".MyEvents">
             <intent-filter android:order="1">

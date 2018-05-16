@@ -36,8 +36,8 @@ public class Event {
         result.id = response.getLong("id");
         result.name = response.getString("name");
         result.about = response.getString("about");
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        result.date = format.parse(response.getString("date"));
+        //DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        result.date = new Date(response.getLong("date"));
         result.creator = User.parseJsonData(response.getJSONObject("creator"));
         JSONArray usersArray = response.getJSONArray("users");
         for(int i = 0; i < usersArray.length(); i++) {
@@ -45,6 +45,29 @@ public class Event {
         }
 
         return result;
+    }
+
+    public static JSONObject getJsonData(Event event) throws JSONException {
+        JSONObject result = new JSONObject();
+
+        result.put("name", event.getName());
+        result.put("about", event.getAbout());
+        result.put("date", event.getDate());
+        result.put("creator", event.getCreator());
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", about='" + about + '\'' +
+                ", date=" + date +
+                ", creator=" + creator.toString() +
+                ", users=" + users.toString() +
+                '}';
     }
 
     public Long getId() {

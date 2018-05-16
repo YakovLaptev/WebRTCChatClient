@@ -104,4 +104,21 @@
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
     <!-- Firebase -->
+
+    <!-- Video chat -->
+    <string name="prompt_wcs_url">WCS Url</string>
+    <string name="prompt_login">Login</string>
+    <string name="prompt_join_room">Room</string>
+    <string name="prompt_message">Message</string>
+    <string name="action_connect">Connect</string>
+    <string name="action_disconnect">Disconnect</string>
+    <string name="action_join">Join</string>
+    <string name="action_leave">Leave</string>
+    <string name="action_publish">Publish</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_send">Send</string>
+    <string name="wcs_url">wss://wcs5-eu.flashphoner.com:8443</string>
+    <string name="mute_audio">Mute Audio</string>
+    <string name="mute_video">Mute Video</string>
+    <!-- Video chat -->
 </resources>
