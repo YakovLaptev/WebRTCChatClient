@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab);
+        //fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,11 +59,15 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         switch (position) {
             case 0:
-                //fragment = new ChatsEventsRequestsActivity(selected);
+                setTitle("My events");
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("my_events", selected == 0);
                 fragment = new MyEvents();
                 fragment.setArguments(bundle);
+                break;
+            case 1:
+                setTitle("Events");
+                fragment = new Events();
                 break;
             default:
                 break;
@@ -115,9 +120,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_users) {
-
+            startActivity(new Intent(this, AddEvent.class));
         } else if (id == R.id.nav_events) {
-            selectItem(0,1);
+            selectItem(1,1);
         } else if (id == R.id.nav_my_chats) {
             startActivity(new Intent(this, VideoChatActivity.class));
         } else if (id == R.id.nav_my_events) {

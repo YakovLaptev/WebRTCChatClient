@@ -32,7 +32,6 @@ public class Event {
     public static Event parseJsonData(JSONObject response) throws JSONException, ParseException {
         Event result = new Event();
 
-        //JSONObject jsonObject = (JSONObject) response.get("");
         result.id = response.getLong("id");
         result.name = response.getString("name");
         result.about = response.getString("about");
@@ -53,7 +52,15 @@ public class Event {
         result.put("name", event.getName());
         result.put("about", event.getAbout());
         result.put("date", event.getDate());
-        result.put("creator", event.getCreator());
+        result.put("creator", User.getJsonData(event.getCreator()));
+        StringBuilder users = new StringBuilder();
+        for(int i = 0; i < event.getUsers().size(); i++) {
+            users.append(User.getJsonData(event.getUsers().get(i)));
+            if(i > 1 && i < event.getUsers().size() - 2) {
+                users.append(",");
+            }
+        }
+        result.put("users", "[" + users.toString() + "]");
 
         return result;
     }

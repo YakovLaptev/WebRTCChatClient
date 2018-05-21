@@ -120,5 +120,6 @@
     <string name="wcs_url">wss://wcs5-eu.flashphoner.com:8443</string>
     <string name="mute_audio">Mute Audio</string>
     <string name="mute_video">Mute Video</string>
+    <string name="title_activity_events">events</string>
     <!-- Video chat -->
 </resources>

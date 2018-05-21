@@ -36,7 +36,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            if(signingProps) {
+            if (signingProps) {
                 signingConfig signingConfigs.release
             }
         }
@@ -73,15 +73,16 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
 
 
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
 
-    apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 
 play {
-    if(signingProps) {
+    if (signingProps) {
         track = 'production'
         serviceAccountEmail = signingProps['service.account.email']
         pk12File = file(signingProps['service.account.pk12file'])

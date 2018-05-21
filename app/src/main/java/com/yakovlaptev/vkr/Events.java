@@ -11,10 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yakovlaptev.vkr.Models.Event;
 import com.yakovlaptev.vkr.Models.User;
@@ -29,20 +26,21 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyEvents extends Fragment {
+public class Events extends Fragment {
 
     View rootView;
     boolean my_events;
+    List<Event> events = new ArrayList<>();
 
     PostTaskListener<JSONArray> postTaskListener;
 
-    public MyEvents() {
+    public Events() {
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.activity_my_events, container, false);
+        rootView = inflater.inflate(R.layout.activity_events, container, false);
         final ListView listView = rootView.findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,7 +55,13 @@ public class MyEvents extends Fragment {
         });
 
         FloatingActionButton fab = rootView.findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         postTaskListener = new PostTaskListener<JSONArray>() {
             @Override
@@ -79,7 +83,7 @@ public class MyEvents extends Fragment {
                 }
                 result = jsonArray;
                 if (result.length() > 1) {
-                    List<Event> events = new ArrayList<>();
+                    events = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
                         try {
                             events.add(Event.parseJsonData(result.getJSONObject(i)));
@@ -101,9 +105,7 @@ public class MyEvents extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
-        my_events = bundle.getBoolean("my_events");
-        requestMyEvents();
+        //requestMyEvents();
         super.onActivityCreated(savedInstanceState);
     }
 
