@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,13 +47,14 @@ public class Events extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                 Intent intent = new Intent(rootView.getContext(), VideoChatActivity.class);
-                String pos = String.valueOf(position);
-                intent.putExtra("event_id", pos);
+                intent.putExtra("event", (Serializable) events.get(position));
                 startActivity(intent);
-                //Toast.makeText(rootView.getContext(), ((TextView) itemClicked).getText(), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(rootView.getContext(), position+"  "+id, Toast.LENGTH_SHORT).show();
             }
         });
+
+        View mainView = inflater.inflate(R.layout.app_bar_main, container, false);
+        FloatingActionButton fabMain = mainView.findViewById(R.id.fab);
+        fabMain.setVisibility(View.INVISIBLE);
 
         FloatingActionButton fab = rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

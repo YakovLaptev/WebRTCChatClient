@@ -56,7 +56,8 @@ public class MyEvents extends Fragment {
             }
         });
 
-        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        View mainView = inflater.inflate(R.layout.app_bar_main, container, false);
+        FloatingActionButton fab = mainView.findViewById(R.id.fab);
         fab.setVisibility(View.INVISIBLE);
 
         postTaskListener = new PostTaskListener<JSONArray>() {

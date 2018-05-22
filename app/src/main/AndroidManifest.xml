@@ -74,6 +74,10 @@
             android:name=".AddEvent"
             android:label="Add event">
         </activity>
+        <activity
+            android:name=".DetailEvent"
+            android:label="Event in detail">
+        </activity>
 
         <!--
             <activity android:name=".MyEvents">
