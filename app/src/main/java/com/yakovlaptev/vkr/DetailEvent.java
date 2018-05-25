@@ -43,7 +43,6 @@ public class DetailEvent extends BaseActivity {
     private TextView creatorField;
     private ListView listView;
     private Button button;
-    private List<User> subscribers = new ArrayList<>();
     private boolean subscribed = false;
 
 
@@ -65,10 +64,11 @@ public class DetailEvent extends BaseActivity {
         listView = findViewById(R.id.subscribers);
         button = findViewById(R.id.button);
 
-        nameField.setText(event.getName());
-        aboutField.setText(event.getAbout());
-        dateField.setText(event.getDate().toString());
+        nameField.setText("Name: "+ event.getName());
+        aboutField.setText("About: "+ event.getAbout());
+        dateField.setText("Date: "+ event.getDate().toString());
         if(event.getCreator().getEmail().equals("test@yandex.ru")) {
+            button.setVisibility(View.INVISIBLE);
             creatorField.setText("Me");
         } else {
             creatorField.setText(String.format("%s : %s", event.getCreator().getName(), event.getCreator().getEmail()));

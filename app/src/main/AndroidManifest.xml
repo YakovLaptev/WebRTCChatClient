@@ -78,6 +78,11 @@
             android:name=".DetailEvent"
             android:label="Event in detail">
         </activity>
+        <activity
+            android:name=".DetailRequest"
+            android:label="Request in detail">
+        </activity>
+
 
         <!--
             <activity android:name=".MyEvents">

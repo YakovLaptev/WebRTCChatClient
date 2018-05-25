@@ -1,7 +1,9 @@
 package com.yakovlaptev.vkr;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -25,12 +27,12 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Events extends Fragment {
 
     View rootView;
-    boolean my_events;
     List<Event> events = new ArrayList<>();
 
     PostTaskListener<JSONArray> postTaskListener;
@@ -66,23 +68,11 @@ public class Events extends Fragment {
         });
 
         postTaskListener = new PostTaskListener<JSONArray>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPostTask(JSONArray result) {
                 //Log.d("JSON RES", result.toString());
                 JSONArray jsonArray = new JSONArray();
-                if(my_events) {
-                    try {
-                        jsonArray = new JSONArray("[{\"id\":1,\"name\":\"event1\",\"about\":\"sdf\",\"date\":1526158800000,\"creator\":{\"id\":1,\"email\":\"sdf\",\"name\":\"sdf\",\"avatar\":\"sdf\",\"about\":\"sdf\"},\"users\":[{\"id\":1,\"email\":\"sdf\",\"name\":\"sdf\",\"avatar\":\"sdf\",\"about\":\"sdf\"}]},{\"id\":2,\"name\":\"event2\",\"about\":\"tet\",\"date\":1525986000000,\"creator\":{\"id\":1,\"email\":\"sdf\",\"name\":\"sdf\",\"avatar\":\"sdf\",\"about\":\"sdf\"},\"users\":[]}]");
-                    } catch (JSONException e) {
-                        Log.e("JSON Parser", "Error parsing data " + e.toString());
-                    }
-                } else {
-                    try {
-                        jsonArray = new JSONArray("[{\"id\":1,\"name\":\"event1\",\"about\":\"sdf\",\"date\":1526158800000,\"creator\":{\"id\":1,\"email\":\"sdf\",\"name\":\"sdf\",\"avatar\":\"sdf\",\"about\":\"sdf\"},\"users\":[{\"id\":1,\"email\":\"sdf\",\"name\":\"sdf\",\"avatar\":\"sdf\",\"about\":\"sdf\"}]},{\"id\":2,\"name\":\"event2\",\"about\":\"tet\",\"date\":1525986000000,\"creator\":{\"id\":1,\"email\":\"sdf\",\"name\":\"sdf\",\"avatar\":\"sdf\",\"about\":\"sdf\"},\"users\":[]},{\"id\":3,\"name\":\"event3\",\"about\":\"sdf\",\"date\":1525899600000,\"creator\":{\"id\":2,\"email\":\"sdf\",\"name\":\"sdf\",\"avatar\":\"sdf\",\"about\":\"sdf\"},\"users\":[]},{\"id\":4,\"name\":\"event4\",\"about\":\"dfgd\",\"date\":1525294800000,\"creator\":{\"id\":3,\"email\":\"sdf\",\"name\":\"sdf\",\"avatar\":\"sdf\",\"about\":\"sdf\"},\"users\":[]}]");
-                    } catch (JSONException e) {
-                        Log.e("JSON Parser", "Error parsing data " + e.toString());
-                    }
-                }
                 result = jsonArray;
                 if (result.length() > 1) {
                     events = new ArrayList<>();
@@ -93,6 +83,14 @@ public class Events extends Fragment {
                             Log.e("JSON Parser", "Error parsing data " + e.toString());
                         }
                     }
+
+                    events.sort(new Comparator<Event>() {
+                        @Override
+                        public int compare(Event o1, Event o2) {
+                            return Long.compare(o1.getDate().getTime(), o2.getDate().getTime());
+                        }
+                    });
+
                     ArrayAdapter adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, events);
                     listView.setAdapter(adapter);
                 }
@@ -119,11 +117,7 @@ public class Events extends Fragment {
         user.setEmail("123");
 
         //new JSONController("http://192.168.137.103:8080/users",User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
-        if(my_events) {
-            new JSONController("http://192.168.137.103:8080/users/my_events/1", new JSONObject(), "GET", postTaskListener).execute(null, null, null);
-        } else {
-            new JSONController("http://192.168.137.103:8080/events", new JSONObject(), "GET", postTaskListener).execute(null, null, null);
-        }
+        new JSONController("http://192.168.137.103:8080/events", new JSONObject(), "GET", postTaskListener).execute(null, null, null);
 
        /* try {
             user = User.parseJsonData(response);

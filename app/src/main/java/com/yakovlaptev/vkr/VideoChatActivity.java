@@ -102,6 +102,8 @@ public class VideoChatActivity extends AppCompatActivity {
 
         room_name = "room_"+ this.getIntent().getExtras().getString("event_id");
         Log.d("ROOM", room_name);
+        Log.d("ROOM USER", String.valueOf(MainActivity.currentUser));
+
 
         /**
          * Initialization of the API.

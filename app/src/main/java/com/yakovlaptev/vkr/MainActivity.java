@@ -19,10 +19,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.yakovlaptev.vkr.Models.Event;
+import com.yakovlaptev.vkr.Models.User;
+
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static final String TAG = "myLogs";
+    static User currentUser;
 
     ViewPager pager;
     PagerAdapter pagerAdapter;
@@ -53,6 +59,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        currentUser = (User) Objects.requireNonNull(this.getIntent().getExtras()).get("user");
+
     }
 
     private void selectItem(int position, int selected) {
