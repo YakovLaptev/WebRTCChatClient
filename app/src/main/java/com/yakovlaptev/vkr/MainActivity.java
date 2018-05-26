@@ -2,6 +2,7 @@ package com.yakovlaptev.vkr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.yakovlaptev.vkr.Models.Event;
 import com.yakovlaptev.vkr.Models.User;
@@ -29,6 +32,11 @@ public class MainActivity extends AppCompatActivity
 
     static final String TAG = "myLogs";
     static User currentUser;
+    private ImageView avatar;
+    private TextView name, email;
+
+    static Intent chatIntent;
+    private View coordLayout;
 
     ViewPager pager;
     PagerAdapter pagerAdapter;
@@ -60,23 +68,62 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        currentUser = (User) Objects.requireNonNull(this.getIntent().getExtras()).get("user");
+        //currentUser = (User) Objects.requireNonNull(this.getIntent().getExtras()).get("user");
 
+        currentUser = new User();
+        currentUser.setEmail("email");
+        currentUser.setName("uakov");
+
+        View header = navigationView.getHeaderView(0);
+        avatar = header.findViewById(R.id.avatar);
+        name = header.findViewById(R.id.name);
+        email = header.findViewById(R.id.email);
+        coordLayout = findViewById(R.id.coordinator);
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        };
+
+        avatar.setOnClickListener(onClickListener);
+        name.setText(currentUser.getName());
+        name.setOnClickListener(onClickListener);
+        email.setText(currentUser.getEmail());
+        email.setOnClickListener(onClickListener);
+
+        Fragment fragment = new Events();
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
     }
 
-    private void selectItem(int position, int selected) {
+    private void selectItem(int position) {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                setTitle("My events");
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("my_events", selected == 0);
+                setTitle("Profile");
+//                Bundle bundle = new Bundle();
+//                bundle.putBoolean("my_events", selected == 0);
                 fragment = new MyEvents();
-                fragment.setArguments(bundle);
+              //  fragment.setArguments(bundle);
                 break;
             case 1:
+                setTitle("Users");
+                fragment = new Events();
+                break;
+            case 2:
                 setTitle("Events");
                 fragment = new Events();
+                break;
+            case 3:
+                setTitle("My Events");
+                fragment = new MyEvents();
+                break;
+            case 4:
+                setTitle("My Requests");
+                fragment = new MyRequests();
                 break;
             default:
                 break;
@@ -127,17 +174,28 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-
+            selectItem(0);
         } else if (id == R.id.nav_users) {
-            startActivity(new Intent(this, AddEvent.class));
+            selectItem(1);
         } else if (id == R.id.nav_events) {
-            selectItem(1,1);
+            selectItem(2);
         } else if (id == R.id.nav_my_chats) {
-            startActivity(new Intent(this, VideoChatActivity.class));
+            if(chatIntent != null) {
+                startActivity(new Intent(this, VideoChatActivity.class));
+            } else {
+                View.OnClickListener listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        selectItem(2);
+                    }
+                };
+                Snackbar.make(coordLayout, "We have no chat opened", Snackbar.LENGTH_LONG)
+                        .setAction("See events", listener).show();
+            }
         } else if (id == R.id.nav_my_events) {
-            selectItem(0,0);
+            selectItem(3);
         } else if (id == R.id.nav_my_requests) {
-            //selectItem(0,1);
+            selectItem(4);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

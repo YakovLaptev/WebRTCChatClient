@@ -59,9 +59,9 @@ public class User {
         JSONObject result = new JSONObject();
 
         result.put("email", user.getEmail());
-        result.put("name", user.getEmail());
-        result.put("avatar", user.getEmail());
-        result.put("about", user.getEmail());
+        result.put("name", user.getName());
+        result.put("avatar", user.getAvatar());
+        result.put("about", user.getAbout());
 
         return result;
     }
