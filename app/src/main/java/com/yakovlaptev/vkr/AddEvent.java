@@ -91,15 +91,10 @@ public class AddEvent extends BaseActivity {
     public void requestAdd() {
         showProgressDialog();
 
-        User user = new User();
-        List<User> users = new ArrayList<>();
-        users.add(user);
-
         event.setName(nameField.getText().toString());
         event.setAbout(aboutField.getText().toString());
         event.setDate(dateAndTime.getTime());
-        event.setCreator(user);
-        event.setUsers(users);
+        event.setCreator(MainActivity.currentUser);
 
         try {
             Toast.makeText(this, Event.getJsonData(event).toString(), Toast.LENGTH_LONG).show();

@@ -98,9 +98,9 @@ public class DetailRequest extends BaseActivity implements View.OnClickListener 
         //showProgressDialog();
 
         if (accept) {
-            new JSONController("http://192.168.137.103:8080/user/my_requests/" + request.getId() + "/accept", null, "GET", postTaskListener).execute(null, null, null);
+            new JSONController("http://192.168.137.103:8080/requests/" + request.getId() + "/accept", null, "GET", postTaskListener).execute(null, null, null);
         } else if (!accept) {
-            new JSONController("http://192.168.137.103:8080/user/my_requests/" + request.getId() + "/deny", null, "GET", postTaskListener).execute(null, null, null);
+            new JSONController("http://192.168.137.103:8080/requests/" + request.getId() + "/deny", null, "GET", postTaskListener).execute(null, null, null);
         }
     }
 }

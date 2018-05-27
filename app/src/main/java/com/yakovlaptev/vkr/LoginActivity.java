@@ -210,7 +210,7 @@ public class LoginActivity extends BaseActivity implements
         us.setEmail(user.getEmail());
 
         try {
-            new JSONController("http://192.168.137.103:8080/users/get_by_email/", User.getJsonData(us), "POST", postTaskListener).execute(null, null, null);
+            new JSONController("http://192.168.137.103:8080/users/get_by_email", User.getJsonData(us), "POST", postTaskListener).execute(null, null, null);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }

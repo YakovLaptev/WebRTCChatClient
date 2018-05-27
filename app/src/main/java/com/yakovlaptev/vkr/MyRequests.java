@@ -93,7 +93,7 @@ public class MyRequests extends Fragment {
 
         //new JSONController("http://192.168.137.103:8080/users",User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
 
-        new JSONController("http://192.168.137.103:8080/users/my_requests/1", new JSONObject(), "GET", postTaskListener).execute(null, null, null);
+        new JSONController("http://192.168.137.103:8080/users/my_requests/" + MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
 
         Log.d("JSON INFO ", "+++++++++");
     }

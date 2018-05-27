@@ -105,16 +105,7 @@ public class MyEvents extends Fragment {
     }
 
     public void requestMyEvents() {
-        User user = new User();
-        user.setName("123");
-        user.setAbout("123");
-        user.setAvatar("123");
-        user.setEmail("123");
-
-        //new JSONController("http://192.168.137.103:8080/users",User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
-
-        new JSONController("http://192.168.137.103:8080/users/my_events/1", new JSONObject(), "GET", postTaskListener).execute(null, null, null);
-
+        new JSONController("http://192.168.137.103:8080/users/my_events/" + MainActivity.currentUser.getId(), new JSONObject(), "GET", postTaskListener).execute(null, null, null);
         Log.d("JSON INFO ", "+++++++++");
     }
 

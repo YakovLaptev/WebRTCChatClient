@@ -105,11 +105,11 @@ public class Events extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        //requestMyEvents();
+        requestEvents();
         super.onActivityCreated(savedInstanceState);
     }
 
-    public void requestMyEvents() {
+    public void requestEvents() {
         User user = new User();
         user.setName("123");
         user.setAbout("123");
@@ -118,12 +118,6 @@ public class Events extends Fragment {
 
         //new JSONController("http://192.168.137.103:8080/users",User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
         new JSONController("http://192.168.137.103:8080/events", new JSONObject(), "GET", postTaskListener).execute(null, null, null);
-
-       /* try {
-            user = User.parseJsonData(response);
-        } catch (Exception e) {
-            Log.d("WIFI INFO ","+++++++++");
-        }*/
 
         Log.d("JSON INFO ", "+++++++++");
     }

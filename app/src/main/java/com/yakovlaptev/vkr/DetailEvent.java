@@ -102,8 +102,13 @@ public class DetailEvent extends BaseActivity {
 
                 try {
                     Event eventRes = Event.parseJsonData((JSONObject) result.get(0));
-                    Log.d("JSON USER", eventRes.toString());
-                    Toast.makeText(DetailEvent.this, eventRes.getName() + "has been added", Toast.LENGTH_SHORT).show();
+                    if(subscribed) {
+                        Log.d("JSON EVENT", eventRes.toString()+"subscribed");
+                        Toast.makeText(DetailEvent.this, "Unubscribed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d("JSON EVENT", eventRes.toString()+"unsubscribed");
+                        Toast.makeText(DetailEvent.this, "Subscribed", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (JSONException | ParseException e) {
                     Log.e("onPostTask", e.getLocalizedMessage());
                 }
@@ -117,22 +122,18 @@ public class DetailEvent extends BaseActivity {
         if(subscribed) {
             subscribed = false;
             button.setText("SUBSCRIBE");
+            showProgressDialog();
+            new JSONController("http://192.168.137.103:8080/events/unsubscribe/"+event.getId()+"/"+MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
+        } else {
+            showProgressDialog();
+            new JSONController("http://192.168.137.103:8080/events/subscribe/"+event.getId()+"/"+MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
         }
-
-        showProgressDialog();
-
       /*  try {
             Toast.makeText(this, Event.getJsonData(event).toString(), Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
             Log.e("Toast.makeText", e.getLocalizedMessage());
         }*/
 
-        try {
-            new JSONController("http://192.168.137.103:8080/events/subscribe/"+event.getId()+"/"+"1", Event.getJsonData(event), "GET", postTaskListener).execute(null, null, null);
-        } catch (JSONException e) {
-            Log.e("JSONController", e.getLocalizedMessage());
-
-        }
 
     }
 
