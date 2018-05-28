@@ -96,7 +96,7 @@ public class JSONParser {
 
             public void run() {
                 try {
-
+                    Log.d("makeHttpRequest", url + " : " + method + " : " + jsonObject);
                     if (Objects.equals(method, "POST")) {
                         DefaultHttpClient httpClient = new DefaultHttpClient();
                         HttpPost httpPost = new HttpPost(url);
@@ -136,7 +136,8 @@ public class JSONParser {
                     }
                     is.close();
                     json = sb.toString();
-                    //Log.d("Buffer Error", "Error converting result " + json);
+                    //Log.d("JSON", json.toString());
+
                 } catch (Exception e) {
                     Log.e("Buffer Error", "Error converting result " + e.toString());
                 }
@@ -144,9 +145,13 @@ public class JSONParser {
                 // пробуем распарсит JSON объект
                 try {
                     jObj = new JSONArray(json);
-                   // Log.d("JOBJ", jObj.toString());
                 } catch (JSONException e) {
-                    Log.e("JSON Parser", "Error parsing data " + e.toString());
+                    jObj = new JSONArray();
+                    try {
+                        jObj.put(new JSONObject(json));
+                    } catch (JSONException e1) {
+                        Log.e("JSON Parser", "Error parsing JSONObject " + e1.toString());
+                    }
                 }
 
             }

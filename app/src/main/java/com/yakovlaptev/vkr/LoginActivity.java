@@ -71,6 +71,7 @@ public class LoginActivity extends BaseActivity implements
                 Log.d("JSON RES USER", result.toString());
                 try {
                     curUser = User.parseJsonData((JSONObject) result.get(0));
+                    updateUI();
                 } catch (JSONException e) {
                     Toast.makeText(LoginActivity.this,"Error of getting current user", Toast.LENGTH_SHORT).show();
                     Log.e("JSON Reciever", "Error getting data " + e.toString());
@@ -86,7 +87,7 @@ public class LoginActivity extends BaseActivity implements
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         user = mAuth.getCurrentUser();
-        updateUI();
+        request();
     }
 
     private void createAccount(String email, String password) {
@@ -217,14 +218,18 @@ public class LoginActivity extends BaseActivity implements
 
         //new JSONController("http://192.168.137.103:8080/users/my_requests/1", new JSONObject(), "GET", postTaskListener).execute(null, null, null);
 
-        Log.d("JSON INFO ", "+++++++++");
+        try {
+            Log.d("JSON INFO ", "++++"+User.getJsonData(us));
+        } catch (JSONException e) {
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        }
     }
 
     private void updateUI() {
         hideProgressDialog();
         if (user != null) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("user", (Serializable) curUser);
+            intent.putExtra("user", curUser);
             startActivity(intent);
             //mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
             //       user.getEmail(), user.isEmailVerified()));

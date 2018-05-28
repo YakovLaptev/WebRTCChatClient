@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     PagerAdapter pagerAdapter;
     static FragmentManager fragmentManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,11 +69,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //currentUser = (User) Objects.requireNonNull(this.getIntent().getExtras()).get("user");
+        currentUser = (User) (Objects.requireNonNull(this.getIntent().getExtras())).get("user");
+        Log.d("MAINACTIVITY User",currentUser.toString());
 
-        currentUser = new User();
+    /*    currentUser = new User();
         currentUser.setEmail("email");
-        currentUser.setName("uakov");
+        currentUser.setName("uakov");*/
 
         View header = navigationView.getHeaderView(0);
         avatar = header.findViewById(R.id.avatar);
@@ -83,8 +85,7 @@ public class MainActivity extends AppCompatActivity
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                selectItem(0);
             }
         };
 

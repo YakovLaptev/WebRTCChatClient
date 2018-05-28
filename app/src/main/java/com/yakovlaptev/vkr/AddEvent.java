@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -76,7 +77,7 @@ public class AddEvent extends BaseActivity {
                 result = jsonArray;
 
                 try {
-                    Event eventRes = Event.parseJsonData((JSONObject) result.get(0));
+                    Event eventRes = Event.parseJsonData((JSONObject) result.get(1));
                     Log.d("JSON USER", eventRes.toString());
                     Toast.makeText(AddEvent.this, eventRes.getName() + "has been added", Toast.LENGTH_SHORT).show();
                 } catch (JSONException | ParseException e) {
@@ -154,7 +155,8 @@ public class AddEvent extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                startActivity(new Intent(this, MainActivity.class));
+                //startActivity(new Intent(this, MainActivity.class));
+                NavUtils.navigateUpFromSameTask(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

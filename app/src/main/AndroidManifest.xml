@@ -28,6 +28,11 @@
                     android:pathPattern="/.*"
                     android:scheme="https" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".EmailPasswordActivity"
@@ -60,11 +65,7 @@
                     android:pathPattern="/.*"
                     android:scheme="https" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".VideoChatActivity"
@@ -73,6 +74,9 @@
         <activity
             android:name=".AddEvent"
             android:label="Add event">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".DetailEvent"

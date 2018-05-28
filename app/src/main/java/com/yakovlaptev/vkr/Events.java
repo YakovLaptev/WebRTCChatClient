@@ -36,6 +36,7 @@ public class Events extends Fragment {
     List<Event> events = new ArrayList<>();
 
     PostTaskListener<JSONArray> postTaskListener;
+    ListView listView;
 
     public Events() {
     }
@@ -44,7 +45,7 @@ public class Events extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_events, container, false);
-        final ListView listView = rootView.findViewById(R.id.listView);
+        listView = rootView.findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
@@ -62,16 +63,24 @@ public class Events extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(rootView.getContext(), AddEvent.class);
+                startActivity(intent);
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
+
+
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
         postTaskListener = new PostTaskListener<JSONArray>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPostTask(JSONArray result) {
-                //Log.d("JSON RES", result.toString());
+                Log.d("JSON RES", result.toString());
                 JSONArray jsonArray = new JSONArray();
                 result = jsonArray;
                 if (result.length() > 1) {
@@ -90,6 +99,8 @@ public class Events extends Fragment {
                             return Long.compare(o1.getDate().getTime(), o2.getDate().getTime());
                         }
                     });
+                    Log.d("EVENTS events", events.toString());
+
 
                     ArrayAdapter adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, events);
                     listView.setAdapter(adapter);
@@ -99,22 +110,11 @@ public class Events extends Fragment {
                 //Toast.makeText(rootView.getContext(), result.toString(), Toast.LENGTH_SHORT).show();
             }
         };
-
-        return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
         requestEvents();
         super.onActivityCreated(savedInstanceState);
     }
 
     public void requestEvents() {
-        User user = new User();
-        user.setName("123");
-        user.setAbout("123");
-        user.setAvatar("123");
-        user.setEmail("123");
 
         //new JSONController("http://192.168.137.103:8080/users",User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
         new JSONController("http://192.168.137.103:8080/events", new JSONObject(), "GET", postTaskListener).execute(null, null, null);

@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Event {
+public class Event implements Serializable {
 
     private Long id;
 
@@ -35,7 +36,6 @@ public class Event {
         result.id = response.getLong("id");
         result.name = response.getString("name");
         result.about = response.getString("about");
-        //DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         result.date = new Date(response.getLong("date"));
         result.creator = User.parseJsonData(response.getJSONObject("creator"));
         JSONArray usersArray = response.getJSONArray("users");
@@ -51,16 +51,8 @@ public class Event {
 
         result.put("name", event.getName());
         result.put("about", event.getAbout());
-        result.put("date", event.getDate());
-        result.put("creator", User.getJsonData(event.getCreator()));
-        StringBuilder users = new StringBuilder();
-        for(int i = 0; i < event.getUsers().size(); i++) {
-            users.append(User.getJsonData(event.getUsers().get(i)));
-            if(i > 1 && i < event.getUsers().size() - 2) {
-                users.append(",");
-            }
-        }
-        result.put("users", "[" + users.toString() + "]");
+        result.put("date", event.getDate().getTime());
+        result.put("creator",event.getCreator().getId());
 
         return result;
     }

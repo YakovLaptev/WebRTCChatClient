@@ -43,6 +43,7 @@ import org.webrtc.SurfaceViewRenderer;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -94,15 +95,17 @@ public class VideoChatActivity extends AppCompatActivity {
 
     private Stream stream;
     private String room_name;
+    private String user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference);
 
-        room_name = "room_"+ this.getIntent().getExtras().getString("event_id");
+        room_name = "room_"+ Objects.requireNonNull(this.getIntent().getExtras()).getString("event_id");
         Log.d("ROOM", room_name);
-        Log.d("ROOM USER", String.valueOf(MainActivity.currentUser));
+        user_name = String.valueOf(MainActivity.currentUser.getName());
+        Log.d("ROOM USER", user_name);
 
 
         /**
@@ -149,7 +152,7 @@ public class VideoChatActivity extends AppCompatActivity {
                      * The connection options are set.
                      * WCS server URL and user name are passed when RoomManagerOptions object is created.
                      */
-                    RoomManagerOptions roomManagerOptions = new RoomManagerOptions("wss://wcs5-eu.flashphoner.com:8443", "Yakov");
+                    RoomManagerOptions roomManagerOptions = new RoomManagerOptions("wss://wcs5-eu.flashphoner.com:8443", user_name);
 
                     /**
                      * RoomManager object is created with method createRoomManager().
@@ -215,7 +218,7 @@ public class VideoChatActivity extends AppCompatActivity {
                     SharedPreferences sharedPref = VideoChatActivity.this.getPreferences(Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("wcs_url", "wss://wcs5-eu.flashphoner.com:8443");
-                    editor.putString("login", "Yakov");
+                    editor.putString("login", user_name);
                     editor.apply();
                 } else {
                     mConnectButton.setEnabled(false);
@@ -561,7 +564,7 @@ public class VideoChatActivity extends AppCompatActivity {
                     for (Participant participant : room.getParticipants()) {
                         participant.sendMessage(text);
                     }
-                    addMessageHistory("Yakov", text);
+                    addMessageHistory(user_name, text);
                     mMessage.setText("");
                 }
             }

@@ -4,9 +4,10 @@ package com.yakovlaptev.vkr.Models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 
-public class Request {
+public class Request implements Serializable {
 
     private Long id;
     private Event event;
