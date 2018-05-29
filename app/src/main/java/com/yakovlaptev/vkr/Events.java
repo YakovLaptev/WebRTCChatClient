@@ -49,8 +49,8 @@ public class Events extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
-                Intent intent = new Intent(rootView.getContext(), VideoChatActivity.class);
-                intent.putExtra("event", (Serializable) events.get(position));
+                Intent intent = new Intent(rootView.getContext(), DetailEvent.class);
+                intent.putExtra("event", events.get(position));
                 startActivity(intent);
             }
         });
@@ -69,36 +69,31 @@ public class Events extends Fragment {
             }
         });
 
-
-
-        return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
         postTaskListener = new PostTaskListener<JSONArray>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPostTask(JSONArray result) {
                 Log.d("JSON RES", result.toString());
-                JSONArray jsonArray = new JSONArray();
-                result = jsonArray;
-                if (result.length() > 1) {
+                //JSONArray jsonArray = new JSONArray();
+                //result = jsonArray;
+                if (result.length() > 0) {
                     events = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
                         try {
                             events.add(Event.parseJsonData(result.getJSONObject(i)));
+                           // Log.d("EVENTS event", Event.parseJsonData(result.getJSONObject(i)).toString());
                         } catch (JSONException | ParseException e) {
                             Log.e("JSON Parser", "Error parsing data " + e.toString());
                         }
                     }
-
-                    events.sort(new Comparator<Event>() {
-                        @Override
-                        public int compare(Event o1, Event o2) {
-                            return Long.compare(o1.getDate().getTime(), o2.getDate().getTime());
-                        }
-                    });
+                    Log.d("EVENTS events", events.toString());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        events.sort(new Comparator<Event>() {
+                            @Override
+                            public int compare(Event o1, Event o2) {
+                                return Long.compare(o1.getDate().getTime(), o2.getDate().getTime());
+                            }
+                        });
+                    }
                     Log.d("EVENTS events", events.toString());
 
 
@@ -110,6 +105,15 @@ public class Events extends Fragment {
                 //Toast.makeText(rootView.getContext(), result.toString(), Toast.LENGTH_SHORT).show();
             }
         };
+
+
+
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+
         requestEvents();
         super.onActivityCreated(savedInstanceState);
     }

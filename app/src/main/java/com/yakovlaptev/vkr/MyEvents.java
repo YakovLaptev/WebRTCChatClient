@@ -67,9 +67,9 @@ public class MyEvents extends Fragment {
             @Override
             public void onPostTask(JSONArray result) {
                 //Log.d("JSON RES", result.toString());
-                JSONArray jsonArray = new JSONArray();
-                result = jsonArray;
-                if (result.length() > 1) {
+                //JSONArray jsonArray = new JSONArray();
+                //result = jsonArray;
+                if (result.length() > 0) {
                     List<Event> events = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
                         try {

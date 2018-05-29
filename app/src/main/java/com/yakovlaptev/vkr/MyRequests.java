@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.yakovlaptev.vkr.Models.Event;
+import com.yakovlaptev.vkr.Models.Request;
 import com.yakovlaptev.vkr.Models.User;
 import com.yakovlaptev.vkr.Services.JSONController;
 import com.yakovlaptev.vkr.Services.PostTaskListener;
@@ -29,6 +30,8 @@ public class MyRequests extends Fragment {
 
     View rootView;
 
+    List<Request> requests = new ArrayList<>();
+
     PostTaskListener<JSONArray> postTaskListener;
 
     public MyRequests() {
@@ -42,9 +45,9 @@ public class MyRequests extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
-                Intent intent = new Intent(rootView.getContext(), VideoChatActivity.class);
+                Intent intent = new Intent(rootView.getContext(), DetailRequest.class);
                 String pos = String.valueOf(position);
-                intent.putExtra("request_id", pos);
+                intent.putExtra("request", pos);
                 startActivity(intent);
                 //Toast.makeText(rootView.getContext(), ((TextView) itemClicked).getText(), Toast.LENGTH_SHORT).show();
                 //Toast.makeText(rootView.getContext(), position+"  "+id, Toast.LENGTH_SHORT).show();
@@ -59,18 +62,18 @@ public class MyRequests extends Fragment {
             @Override
             public void onPostTask(JSONArray result) {
                 //Log.d("JSON RES", result.toString());
-                JSONArray jsonArray = new JSONArray();
-                result = jsonArray;
-                if (result.length() > 1) {
-                    List<Event> events = new ArrayList<>();
+                //JSONArray jsonArray = new JSONArray();
+                //result = jsonArray;
+                if (result.length() > 0) {
+                    requests = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
                         try {
-                            events.add(Event.parseJsonData(result.getJSONObject(i)));
+                            requests.add(Request.parseJsonData(result.getJSONObject(i)));
                         } catch (JSONException | ParseException e) {
                             Log.e("JSON Parser", "Error parsing data " + e.toString());
                         }
                     }
-                    ArrayAdapter adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, events);
+                    ArrayAdapter adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, requests);
                     listView.setAdapter(adapter);
                 }
                 //User user = User.parseJsonData(result);

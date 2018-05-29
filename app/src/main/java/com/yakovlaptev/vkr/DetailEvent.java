@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class DetailEvent extends BaseActivity {
 
@@ -43,7 +44,9 @@ public class DetailEvent extends BaseActivity {
     private TextView creatorField;
     private ListView listView;
     private Button button;
+    private Button buttonAdd;
     private boolean subscribed = false;
+    private boolean connect = false;
 
 
 
@@ -63,25 +66,45 @@ public class DetailEvent extends BaseActivity {
         creatorField = findViewById(R.id.creator);
         listView = findViewById(R.id.subscribers);
         button = findViewById(R.id.button);
+        buttonAdd = findViewById(R.id.buttonConnect);
+
+        event = (Event) Objects.requireNonNull(this.getIntent().getExtras()).get("event");
+        Log.d("-----event-----", event.toString());
 
         nameField.setText("Name: "+ event.getName());
         aboutField.setText("About: "+ event.getAbout());
         dateField.setText("Date: "+ event.getDate().toString());
-        if(event.getCreator().getEmail().equals("test@yandex.ru")) {
+        if(event.getCreator().getEmail().equals(MainActivity.currentUser.getEmail())) {
+            connect = true;
             button.setVisibility(View.INVISIBLE);
-            creatorField.setText("Me");
+            creatorField.setText("Creator: Me");
         } else {
-            creatorField.setText(String.format("%s : %s", event.getCreator().getName(), event.getCreator().getEmail()));
+            connect = false;
+            creatorField.setText(String.format("Creator: %s", String.format("%s : %s", event.getCreator().getName(), event.getCreator().getEmail())));
         }
         ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, event.getUsers());
         listView.setAdapter(adapter);
 
-        event = (Event) this.getIntent().getExtras().get("event");
-        for(User user : event.getUsers()) {
-            if(user.getEmail().equals("test@yandex.ru")) {
+
+        for(User user : Objects.requireNonNull(event).getUsers()) {
+            if(user.getEmail().equals(MainActivity.currentUser.getEmail())) {
                 subscribed = true;
                 button.setText("UNSUBSCRIBE");
+                connect = true;
+                break;
             }
+        }
+
+        if(connect) {
+            buttonAdd.setVisibility(View.VISIBLE);
+            buttonAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(DetailEvent.this, VideoChatActivity.class);
+                    intent.putExtra("event_id", event.getId());
+                    startActivity(intent);
+                }
+            });
         }
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -97,8 +120,8 @@ public class DetailEvent extends BaseActivity {
                 //Log.d("JSON RES", result.toString());
                 hideProgressDialog();
 
-                JSONArray jsonArray = new JSONArray();
-                result = jsonArray;
+                //JSONArray jsonArray = new JSONArray();
+                //result = jsonArray;
 
                 try {
                     Event eventRes = Event.parseJsonData((JSONObject) result.get(0));
@@ -113,6 +136,7 @@ public class DetailEvent extends BaseActivity {
                     Log.e("onPostTask", e.getLocalizedMessage());
                 }
 
+                startActivity(new Intent(DetailEvent.this, MainActivity.class));
             }
         };
     }

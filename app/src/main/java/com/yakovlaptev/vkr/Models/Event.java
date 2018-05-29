@@ -28,7 +28,8 @@ public class Event implements Serializable {
 
     private List<User> users = new ArrayList<>();
 
-    public Event() {}
+    public Event() {
+    }
 
     public static Event parseJsonData(JSONObject response) throws JSONException, ParseException {
         Event result = new Event();
@@ -37,9 +38,14 @@ public class Event implements Serializable {
         result.name = response.getString("name");
         result.about = response.getString("about");
         result.date = new Date(response.getLong("date"));
-        result.creator = User.parseJsonData(response.getJSONObject("creator"));
+        result.creator = new User();
+        result.creator.setName("test");
+        result.creator.setEmail("test@test.ru");
+        if(!response.isNull(("creator"))) {
+            result.creator = User.parseJsonData(response.getJSONObject("creator"));
+        }
         JSONArray usersArray = response.getJSONArray("users");
-        for(int i = 0; i < usersArray.length(); i++) {
+        for (int i = 0; i < usersArray.length(); i++) {
             result.users.add(User.parseJsonData(usersArray.getJSONObject(i)));
         }
 
@@ -52,21 +58,17 @@ public class Event implements Serializable {
         result.put("name", event.getName());
         result.put("about", event.getAbout());
         result.put("date", event.getDate().getTime());
-        result.put("creator",event.getCreator().getId());
+        result.put("creator", event.getCreator().getId());
 
         return result;
     }
 
     @Override
     public String toString() {
-        return "Event{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", about='" + about + '\'' +
-                ", date=" + date +
-                ", creator=" + creator.toString() +
-                ", users=" + users.toString() +
-                '}';
+        return name +
+                "\n" + date +
+                "\nAbout: " + about +
+                "\nCreator: " + creator.getName() + " : " + creator.getEmail();
     }
 
     public Long getId() {
