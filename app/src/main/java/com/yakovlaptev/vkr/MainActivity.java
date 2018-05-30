@@ -55,8 +55,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, VideoChatActivity.class);
+                startActivity(intent);
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 1:
                 setTitle("Users");
-                fragment = new Events();
+                fragment = new Users();
                 break;
             case 2:
                 setTitle("Events");
@@ -164,7 +165,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.putExtra("log_out", true);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

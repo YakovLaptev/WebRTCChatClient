@@ -69,15 +69,8 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", about='" + about + '\'' +
-                ", myEvents=" + myEvents +
-                ", events=" + events +
-                '}';
+        return name + " : " + email +
+                "\n About: " + about;
     }
 
     public Long getId() {

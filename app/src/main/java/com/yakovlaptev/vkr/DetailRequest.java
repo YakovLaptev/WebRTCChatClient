@@ -52,10 +52,12 @@ public class DetailRequest extends BaseActivity implements View.OnClickListener 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
 
-        request = (Request) this.getIntent().getExtras().get("event");
+        request = (Request) this.getIntent().getExtras().get("request");
 
         eventField.setText(String.format("Event: %s : %s", request.getEvent().getName(), request.getEvent().getDate()));
-        userField.setText(String.format("User: %s : %s", request.getUser().getName(), request.getUser().getEmail()));
+        userField.setText(String.format("User: %s : %s",
+                request.getEvent().getUsers().get(request.getEvent().getUsers().size()-1).getName(),
+                request.getEvent().getUsers().get(request.getEvent().getUsers().size()-1).getEmail()));
 
        /* postTaskListener = new PostTaskListener<JSONArray>() {
             @Override

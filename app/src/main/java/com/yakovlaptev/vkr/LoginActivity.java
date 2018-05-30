@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.yakovlaptev.vkr.Models.Event;
 import com.yakovlaptev.vkr.Models.User;
 import com.yakovlaptev.vkr.Services.JSONController;
 import com.yakovlaptev.vkr.Services.PostTaskListener;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.Objects;
 
 
 public class LoginActivity extends BaseActivity implements
@@ -85,9 +87,17 @@ public class LoginActivity extends BaseActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        user = mAuth.getCurrentUser();
-        request();
+        boolean log_out = false;
+        if (this.getIntent().getExtras() != null && !this.getIntent().getExtras().isEmpty()) {
+            log_out = (boolean) Objects.requireNonNull(this.getIntent().getExtras()).get("log_out");
+        }
+        if(!log_out) {
+            // Check if user is signed in (non-null) and update UI accordingly.
+            user = mAuth.getCurrentUser();
+            request();
+        } else {
+            signOut();
+        }
     }
 
     private void createAccount(String email, String password) {

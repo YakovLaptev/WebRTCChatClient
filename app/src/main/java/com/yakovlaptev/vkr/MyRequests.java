@@ -46,8 +46,7 @@ public class MyRequests extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View itemClicked, int position, long id) {
                 Intent intent = new Intent(rootView.getContext(), DetailRequest.class);
-                String pos = String.valueOf(position);
-                intent.putExtra("request", pos);
+                intent.putExtra("request", requests.get(position));
                 startActivity(intent);
                 //Toast.makeText(rootView.getContext(), ((TextView) itemClicked).getText(), Toast.LENGTH_SHORT).show();
                 //Toast.makeText(rootView.getContext(), position+"  "+id, Toast.LENGTH_SHORT).show();

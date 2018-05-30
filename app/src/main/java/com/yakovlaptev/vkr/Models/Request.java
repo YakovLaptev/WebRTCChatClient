@@ -20,7 +20,7 @@ public class Request implements Serializable {
 
         result.id = response.getLong("id");
         result.event = Event.parseJsonData(response.getJSONObject("event"));
-        result.user = User.parseJsonData(response.getJSONObject("user"));
+        result.user = result.event.getUsers().get(result.event.getUsers().size()-1);
 
         return result;
     }
@@ -36,11 +36,8 @@ public class Request implements Serializable {
 
     @Override
     public String toString() {
-        return "Request{" +
-                "id=" + id +
-                ", event=" + event +
-                ", user=" + user +
-                '}';
+        return "Event: " + event +
+                "\n User=" + user;
     }
 
     public Long getId() {
