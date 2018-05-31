@@ -102,11 +102,14 @@ public class VideoChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference);
 
-        room_name = "room_"+ Objects.requireNonNull(this.getIntent().getExtras()).getString("event_id");
+        room_name = "room_"+ String.valueOf(this.getIntent().getExtras().get("event_id"));
         Log.d("ROOM", room_name);
         user_name = String.valueOf(MainActivity.currentUser.getName());
         Log.d("ROOM USER", user_name);
 
+               android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         /**
          * Initialization of the API.
@@ -649,6 +652,17 @@ public class VideoChatActivity extends AppCompatActivity {
         super.onDestroy();
         if (roomManager != null) {
             roomManager.disconnect();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(LoginActivity.mainIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

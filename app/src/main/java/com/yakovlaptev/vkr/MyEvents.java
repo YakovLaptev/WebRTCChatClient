@@ -53,22 +53,17 @@ public class MyEvents extends Fragment {
                 String pos = String.valueOf(position);
                 intent.putExtra("event_id", pos);
                 startActivity(intent);
-                //Toast.makeText(rootView.getContext(), ((TextView) itemClicked).getText(), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(rootView.getContext(), position+"  "+id, Toast.LENGTH_SHORT).show();
             }
         });
 
         View mainView = inflater.inflate(R.layout.app_bar_main, container, false);
         FloatingActionButton fab = mainView.findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.VISIBLE);
 
         postTaskListener = new PostTaskListener<JSONArray>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPostTask(JSONArray result) {
-                //Log.d("JSON RES", result.toString());
-                //JSONArray jsonArray = new JSONArray();
-                //result = jsonArray;
                 if (result.length() > 0) {
                     List<Event> events = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
@@ -89,9 +84,6 @@ public class MyEvents extends Fragment {
                     ArrayAdapter adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, events);
                     listView.setAdapter(adapter);
                 }
-                //User user = User.parseJsonData(result);
-                //Log.d("JSON USER", user.toString());
-                //Toast.makeText(rootView.getContext(), result.toString(), Toast.LENGTH_SHORT).show();
             }
         };
 

@@ -102,6 +102,7 @@ public class DetailEvent extends BaseActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(DetailEvent.this, VideoChatActivity.class);
                     intent.putExtra("event_id", event.getId());
+                    MainActivity.chatIntent = intent;
                     startActivity(intent);
                 }
             });
@@ -117,12 +118,7 @@ public class DetailEvent extends BaseActivity {
         postTaskListener = new PostTaskListener<JSONArray>() {
             @Override
             public void onPostTask(JSONArray result) {
-                //Log.d("JSON RES", result.toString());
                 hideProgressDialog();
-
-                //JSONArray jsonArray = new JSONArray();
-                //result = jsonArray;
-
                 try {
                     Event eventRes = Event.parseJsonData((JSONObject) result.get(0));
                     if(subscribed) {
@@ -135,7 +131,6 @@ public class DetailEvent extends BaseActivity {
                 } catch (JSONException | ParseException e) {
                     Log.e("onPostTask", e.getLocalizedMessage());
                 }
-
                 startActivity(new Intent(DetailEvent.this, MainActivity.class));
             }
         };
@@ -152,20 +147,13 @@ public class DetailEvent extends BaseActivity {
             showProgressDialog();
             new JSONController("http://192.168.137.103:8080/events/subscribe/"+event.getId()+"/"+MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
         }
-      /*  try {
-            Toast.makeText(this, Event.getJsonData(event).toString(), Toast.LENGTH_LONG).show();
-        } catch (JSONException e) {
-            Log.e("Toast.makeText", e.getLocalizedMessage());
-        }*/
-
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(LoginActivity.mainIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

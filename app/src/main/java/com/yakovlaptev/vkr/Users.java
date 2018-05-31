@@ -44,40 +44,26 @@ public class Users extends Fragment {
         rootView = inflater.inflate(R.layout.activity_users, container, false);
         listView = rootView.findViewById(R.id.listView);
 
+        View mainView = inflater.inflate(R.layout.app_bar_main, container, false);
+        FloatingActionButton fab = mainView.findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+
         postTaskListener = new PostTaskListener<JSONArray>() {
             @Override
             public void onPostTask(JSONArray result) {
                 Log.d("JSON RES", result.toString());
-                //JSONArray jsonArray = new JSONArray();
-                //result = jsonArray;
                 if (result.length() > 0) {
                     users = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
                         try {
                             users.add(User.parseJsonData(result.getJSONObject(i)));
-                           // Log.d("EVENTS event", Event.parseJsonData(result.getJSONObject(i)).toString());
                         } catch (JSONException | ParseException e) {
                             Log.e("JSON Parser", "Error parsing data " + e.toString());
                         }
                     }
-                 /*   Log.d("EVENTS events", users.toString());
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        users.sort(new Comparator<Event>() {
-                            @Override
-                            public int compare(Event o1, Event o2) {
-                                return Long.compare(o1.getDate().getTime(), o2.getDate().getTime());
-                            }
-                        });
-                    }
-                    Log.d("EVENTS events", users.toString());*/
-
-
                     ArrayAdapter adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, users);
                     listView.setAdapter(adapter);
                 }
-                //User user = User.parseJsonData(result);
-                //Log.d("JSON USER", user.toString());
-                //Toast.makeText(rootView.getContext(), result.toString(), Toast.LENGTH_SHORT).show();
             }
         };
         return rootView;
@@ -90,10 +76,7 @@ public class Users extends Fragment {
     }
 
     public void requestUsers() {
-
-        //new JSONController("http://192.168.137.103:8080/users",User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
         new JSONController("http://192.168.137.103:8080/users", null, "GET", postTaskListener).execute(null, null, null);
-
         Log.d("JSON INFO ", "+++++++++");
     }
 

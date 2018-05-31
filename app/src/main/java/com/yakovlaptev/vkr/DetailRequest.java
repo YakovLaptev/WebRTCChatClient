@@ -85,12 +85,12 @@ public class DetailRequest extends BaseActivity implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.accept: {
                 request(true);
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(LoginActivity.mainIntent);
                 break;
             }
             case R.id.deny: {
                 request(false);
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(LoginActivity.mainIntent);
                 break;
             }
         }

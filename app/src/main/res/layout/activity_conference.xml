@@ -27,7 +27,7 @@
 
             <Button
                 android:id="@+id/connect_button"
-                style="?android:textAppearanceSmall"
+                style="@style/FirebaseUI.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -50,7 +50,7 @@
 
             <Button
                 android:id="@+id/join_button"
-                style="?android:textAppearanceSmall"
+                style="@style/FirebaseUI.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -115,7 +115,7 @@
 
             <Button
                 android:id="@+id/publish_button"
-                style="?android:textAppearanceSmall"
+                style="@style/FirebaseUI.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -153,7 +153,7 @@
 
             <Button
                 android:id="@+id/send_button"
-                style="?android:textAppearanceSmall"
+                style="@style/FirebaseUI.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

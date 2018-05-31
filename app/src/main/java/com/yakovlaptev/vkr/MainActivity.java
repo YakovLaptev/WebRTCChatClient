@@ -50,14 +50,23 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         FloatingActionButton fab = findViewById(R.id.fab);
-        //fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, VideoChatActivity.class);
-                startActivity(intent);
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                if(chatIntent != null) {
+                    startActivity(new Intent(MainActivity.this, VideoChatActivity.class));
+                } else {
+                    View.OnClickListener listener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            selectItem(2);
+                        }
+                    };
+                    Snackbar.make(coordLayout, "We have no chat opened", Snackbar.LENGTH_LONG)
+                            .setAction("See events", listener).show();
+                }
             }
         });
 
@@ -72,10 +81,6 @@ public class MainActivity extends AppCompatActivity
 
         currentUser = (User) (Objects.requireNonNull(this.getIntent().getExtras())).get("user");
         Log.d("MAINACTIVITY User",currentUser.toString());
-
-    /*    currentUser = new User();
-        currentUser.setEmail("email");
-        currentUser.setName("uakov");*/
 
         View header = navigationView.getHeaderView(0);
         avatar = header.findViewById(R.id.avatar);
@@ -106,10 +111,7 @@ public class MainActivity extends AppCompatActivity
         switch (position) {
             case 0:
                 setTitle("Profile");
-//                Bundle bundle = new Bundle();
-//                bundle.putBoolean("my_events", selected == 0);
                 fragment = new MyEvents();
-              //  fragment.setArguments(bundle);
                 break;
             case 1:
                 setTitle("Users");
@@ -158,12 +160,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             intent.putExtra("log_out", true);

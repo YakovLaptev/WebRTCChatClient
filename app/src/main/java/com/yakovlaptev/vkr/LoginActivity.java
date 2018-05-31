@@ -46,6 +46,9 @@ public class LoginActivity extends BaseActivity implements
     // [END declare_auth]
     private User curUser;
 
+    static Intent mainIntent;
+
+
     PostTaskListener<JSONArray> postTaskListener;
 
 
@@ -94,7 +97,10 @@ public class LoginActivity extends BaseActivity implements
         if(!log_out) {
             // Check if user is signed in (non-null) and update UI accordingly.
             user = mAuth.getCurrentUser();
-            request();
+            //updateUI();
+            if(user != null) {
+                request();
+            }
         } else {
             signOut();
         }
@@ -218,6 +224,8 @@ public class LoginActivity extends BaseActivity implements
 
     public void request() {
         User us = new User();
+        Log.d("!user! ", "++++"+user.toString());
+
         us.setEmail(user.getEmail());
 
         try {
@@ -240,6 +248,7 @@ public class LoginActivity extends BaseActivity implements
         if (user != null) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("user", curUser);
+            mainIntent = intent;
             startActivity(intent);
             //mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
             //       user.getEmail(), user.isEmailVerified()));

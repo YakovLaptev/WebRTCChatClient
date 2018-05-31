@@ -65,7 +65,6 @@ public class Events extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(rootView.getContext(), AddEvent.class);
                 startActivity(intent);
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -73,14 +72,11 @@ public class Events extends Fragment {
             @Override
             public void onPostTask(JSONArray result) {
                 Log.d("JSON RES", result.toString());
-                //JSONArray jsonArray = new JSONArray();
-                //result = jsonArray;
                 if (result.length() > 0) {
                     events = new ArrayList<>();
                     for (int i = 0; i < result.length(); i++) {
                         try {
                             events.add(Event.parseJsonData(result.getJSONObject(i)));
-                           // Log.d("EVENTS event", Event.parseJsonData(result.getJSONObject(i)).toString());
                         } catch (JSONException | ParseException e) {
                             Log.e("JSON Parser", "Error parsing data " + e.toString());
                         }
@@ -95,7 +91,6 @@ public class Events extends Fragment {
                         });
                     }
                     Log.d("EVENTS events", events.toString());
-
 
                     ArrayAdapter adapter = new ArrayAdapter<>(rootView.getContext(), android.R.layout.simple_list_item_1, events);
                     listView.setAdapter(adapter);
@@ -115,10 +110,7 @@ public class Events extends Fragment {
     }
 
     public void requestEvents() {
-
-        //new JSONController("http://192.168.137.103:8080/users",User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
         new JSONController("http://192.168.137.103:8080/events", null, "GET", postTaskListener).execute(null, null, null);
-
         Log.d("JSON INFO ", "+++++++++");
     }
 

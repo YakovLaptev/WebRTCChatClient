@@ -70,19 +70,7 @@ public class AddEvent extends BaseActivity {
         postTaskListener = new PostTaskListener<JSONArray>() {
             @Override
             public void onPostTask(JSONArray result) {
-                //Log.d("JSON RES", result.toString());
                 hideProgressDialog();
-
-              /*  JSONArray jsonArray = new JSONArray();
-                result = jsonArray;
-
-                try {
-                    Event eventRes = Event.parseJsonData((JSONObject) result.get(1));
-                    Log.d("JSON USER", eventRes.toString());
-                    Toast.makeText(AddEvent.this, eventRes.getName() + "has been added", Toast.LENGTH_SHORT).show();
-                } catch (JSONException | ParseException e) {
-                    Log.e("onPostTask", e.getLocalizedMessage());
-                }*/
                 startActivity(new Intent(AddEvent.this, MainActivity.class));
             }
         };
@@ -155,8 +143,7 @@ public class AddEvent extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                startActivity(new Intent(this, MainActivity.class));
-                //NavUtils.navigateUpFromSameTask(this);
+                startActivity(LoginActivity.mainIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
