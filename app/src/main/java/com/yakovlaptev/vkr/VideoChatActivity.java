@@ -285,7 +285,7 @@ public class VideoChatActivity extends AppCompatActivity {
                              * The method returns collection of Participant objects.
                              * The collection size is determined, and, if the maximum allowed number (in this case, three) has already been reached, the user leaves the room with method Room.leave().
                              */
-                            if (room.getParticipants().size() >= 2) {
+                            if (room.getParticipants().size() >= 3 ) {
                                 room.leave(null);
                                 runOnUiThread(
                                         new Runnable() {

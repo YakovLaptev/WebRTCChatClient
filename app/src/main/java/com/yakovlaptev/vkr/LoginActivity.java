@@ -120,7 +120,8 @@ public class LoginActivity extends BaseActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             user = mAuth.getCurrentUser();
-                            User u = new User();
+                            User u = new User()
+                                    ;
                             u.setEmail(user.getEmail());
                             u.setName(user.getEmail().substring(0, user.getEmail().indexOf("@")));
                             requestCreate(u);
