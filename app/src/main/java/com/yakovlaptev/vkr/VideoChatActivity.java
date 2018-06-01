@@ -102,7 +102,11 @@ public class VideoChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference);
 
-        room_name = "room_"+ String.valueOf(this.getIntent().getExtras().get("event_id"));
+        try {
+            room_name = "room_" + String.valueOf(this.getIntent().getExtras().get("event_id"));
+        } catch (NullPointerException e) {
+            room_name = "room_" + 1;
+        }
         Log.d("ROOM", room_name);
         user_name = String.valueOf(MainActivity.currentUser.getName());
         Log.d("ROOM USER", user_name);

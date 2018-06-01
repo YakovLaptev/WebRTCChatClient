@@ -120,6 +120,10 @@ public class LoginActivity extends BaseActivity implements
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             user = mAuth.getCurrentUser();
+                            User u = new User();
+                            u.setEmail(user.getEmail());
+                            u.setName(user.getEmail().substring(0, user.getEmail().indexOf("@")));
+                            requestCreate(u);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -234,10 +238,16 @@ public class LoginActivity extends BaseActivity implements
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
 
-        //new JSONController("http://192.168.137.103:8080/users/my_requests/1", new JSONObject(), "GET", postTaskListener).execute(null, null, null);
-
         try {
             Log.d("JSON INFO ", "++++"+User.getJsonData(us));
+        } catch (JSONException e) {
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        }
+    }
+
+    public void requestCreate(User user) {
+        try {
+            new JSONController("http://192.168.137.103:8080/users/", User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
