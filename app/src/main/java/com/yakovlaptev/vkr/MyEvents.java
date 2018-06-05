@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.yakovlaptev.vkr.MainActivity.SERVER;
+
 public class MyEvents extends Fragment {
 
     View rootView;
@@ -97,7 +99,7 @@ public class MyEvents extends Fragment {
     }
 
     public void requestMyEvents() {
-        new JSONController("http://192.168.137.103:8080/users/my_events/" + MainActivity.currentUser.getId(), new JSONObject(), "GET", postTaskListener).execute(null, null, null);
+        new JSONController(SERVER+"/users/my_events/" + MainActivity.currentUser.getId(), new JSONObject(), "GET", postTaskListener).execute(null, null, null);
         Log.d("JSON INFO ", "+++++++++");
     }
 

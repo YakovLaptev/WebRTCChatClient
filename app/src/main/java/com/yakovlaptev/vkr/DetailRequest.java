@@ -24,6 +24,8 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 
+import static com.yakovlaptev.vkr.MainActivity.SERVER;
+
 public class DetailRequest extends BaseActivity implements View.OnClickListener {
 
     private Request request;
@@ -100,9 +102,9 @@ public class DetailRequest extends BaseActivity implements View.OnClickListener 
         //showProgressDialog();
 
         if (accept) {
-            new JSONController("http://192.168.137.103:8080/requests/" + request.getId() + "/accept", null, "GET", postTaskListener).execute(null, null, null);
+            new JSONController(SERVER+"/requests/" + request.getId() + "/accept", null, "GET", postTaskListener).execute(null, null, null);
         } else if (!accept) {
-            new JSONController("http://192.168.137.103:8080/requests/" + request.getId() + "/deny", null, "GET", postTaskListener).execute(null, null, null);
+            new JSONController(SERVER+"/requests/" + request.getId() + "/deny", null, "GET", postTaskListener).execute(null, null, null);
         }
     }
 }

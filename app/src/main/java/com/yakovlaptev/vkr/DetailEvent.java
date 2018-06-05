@@ -33,6 +33,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import static com.yakovlaptev.vkr.MainActivity.SERVER;
+
 public class DetailEvent extends BaseActivity {
 
     private Event event;
@@ -142,10 +144,10 @@ public class DetailEvent extends BaseActivity {
             subscribed = false;
             button.setText("SUBSCRIBE");
             showProgressDialog();
-            new JSONController("http://192.168.137.103:8080/events/unsubscribe/"+event.getId()+"/"+MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
+            new JSONController(SERVER+"/events/unsubscribe/"+event.getId()+"/"+MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
         } else {
             showProgressDialog();
-            new JSONController("http://192.168.137.103:8080/events/subscribe/"+event.getId()+"/"+MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
+            new JSONController(SERVER+"/events/subscribe/"+event.getId()+"/"+MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
         }
     }
 

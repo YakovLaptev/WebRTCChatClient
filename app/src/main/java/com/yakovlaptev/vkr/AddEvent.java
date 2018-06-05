@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.yakovlaptev.vkr.MainActivity.SERVER;
+
 public class AddEvent extends BaseActivity {
 
     Event event = new Event();
@@ -92,7 +94,7 @@ public class AddEvent extends BaseActivity {
         }
 
         try {
-            new JSONController("http://192.168.137.103:8080/events", Event.getJsonData(event), "POST", postTaskListener).execute(null, null, null);
+            new JSONController(SERVER+"/events", Event.getJsonData(event), "POST", postTaskListener).execute(null, null, null);
         } catch (JSONException e) {
             Log.e("JSONController", e.getLocalizedMessage());
 

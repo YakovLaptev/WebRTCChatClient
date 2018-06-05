@@ -26,6 +26,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.yakovlaptev.vkr.MainActivity.SERVER;
+
 public class MyRequests extends Fragment {
 
     View rootView;
@@ -93,7 +95,7 @@ public class MyRequests extends Fragment {
 
         //new JSONController("http://192.168.137.103:8080/users",User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
 
-        new JSONController("http://192.168.137.103:8080/users/my_requests/" + MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
+        new JSONController(SERVER+"/users/my_requests/" + MainActivity.currentUser.getId(), null, "GET", postTaskListener).execute(null, null, null);
 
         Log.d("JSON INFO ", "+++++++++");
     }

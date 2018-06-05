@@ -29,6 +29,8 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Objects;
 
+import static com.yakovlaptev.vkr.MainActivity.SERVER;
+
 
 public class LoginActivity extends BaseActivity implements
         View.OnClickListener {
@@ -234,7 +236,7 @@ public class LoginActivity extends BaseActivity implements
         us.setEmail(user.getEmail());
 
         try {
-            new JSONController("http://192.168.137.103:8080/users/get_by_email", User.getJsonData(us), "POST", postTaskListener).execute(null, null, null);
+            new JSONController(SERVER+"/users/get_by_email", User.getJsonData(us), "POST", postTaskListener).execute(null, null, null);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
@@ -248,7 +250,7 @@ public class LoginActivity extends BaseActivity implements
 
     public void requestCreate(User user) {
         try {
-            new JSONController("http://192.168.137.103:8080/users/", User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
+            new JSONController(SERVER+"/users/", User.getJsonData(user), "POST", postTaskListener).execute(null, null, null);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
