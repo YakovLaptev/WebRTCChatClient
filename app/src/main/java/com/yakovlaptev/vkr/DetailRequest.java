@@ -1,30 +1,18 @@
 package com.yakovlaptev.vkr;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.yakovlaptev.vkr.Models.Event;
 import com.yakovlaptev.vkr.Models.Request;
-import com.yakovlaptev.vkr.Models.User;
 import com.yakovlaptev.vkr.Services.JSONController;
 import com.yakovlaptev.vkr.Services.PostTaskListener;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.text.ParseException;
-
-import static com.yakovlaptev.vkr.MainActivity.SERVER;
+import static com.yakovlaptev.vkr.LoginActivity.SERVER;
 
 public class DetailRequest extends BaseActivity implements View.OnClickListener {
 

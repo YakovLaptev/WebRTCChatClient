@@ -3,10 +3,7 @@ package com.yakovlaptev.vkr;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -18,23 +15,16 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.yakovlaptev.vkr.Models.Event;
-import com.yakovlaptev.vkr.Models.User;
 import com.yakovlaptev.vkr.Services.JSONController;
 import com.yakovlaptev.vkr.Services.PostTaskListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import static com.yakovlaptev.vkr.MainActivity.SERVER;
+import static com.yakovlaptev.vkr.LoginActivity.SERVER;
 
 public class AddEvent extends BaseActivity {
 

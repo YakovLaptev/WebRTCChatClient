@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static final String TAG = "myLogs";
-    public static final String SERVER = "http://vkrserver-env.hdnu6ttdsc.eu-west-3.elasticbeanstalk.com/:8080";
     static User currentUser;
     private ImageView avatar;
     private TextView name, email;

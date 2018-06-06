@@ -1,21 +1,15 @@
 package com.yakovlaptev.vkr;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.yakovlaptev.vkr.Models.Event;
@@ -28,12 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
 
-import static com.yakovlaptev.vkr.MainActivity.SERVER;
+import static com.yakovlaptev.vkr.LoginActivity.SERVER;
 
 public class DetailEvent extends BaseActivity {
 

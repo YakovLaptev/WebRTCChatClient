@@ -1,7 +1,5 @@
 package com.yakovlaptev.vkr;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -9,25 +7,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.yakovlaptev.vkr.Models.Event;
 import com.yakovlaptev.vkr.Models.User;
 import com.yakovlaptev.vkr.Services.JSONController;
 import com.yakovlaptev.vkr.Services.PostTaskListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-import static com.yakovlaptev.vkr.MainActivity.SERVER;
+import static com.yakovlaptev.vkr.LoginActivity.SERVER;
 
 public class Users extends Fragment {
 

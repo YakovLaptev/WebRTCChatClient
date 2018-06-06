@@ -16,7 +16,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.yakovlaptev.vkr.Models.Event;
 import com.yakovlaptev.vkr.Models.User;
 import com.yakovlaptev.vkr.Services.JSONController;
 import com.yakovlaptev.vkr.Services.PostTaskListener;
@@ -25,16 +24,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Objects;
-
-import static com.yakovlaptev.vkr.MainActivity.SERVER;
 
 
 public class LoginActivity extends BaseActivity implements
         View.OnClickListener {
 
+    public static final String SERVER = "http://vkrserver-env.hdnu6ttdsc.eu-west-3.elasticbeanstalk.com/:8080";
     private static final String TAG = "EmailPassword";
 
     //private TextView mStatusTextView;
@@ -93,7 +90,7 @@ public class LoginActivity extends BaseActivity implements
     public void onStart() {
         super.onStart();
         boolean log_out = false;
-        if (this.getIntent().getExtras() != null && !this.getIntent().getExtras().isEmpty()) {
+        if (this.getIntent().getExtras() != null && !this.getIntent().getExtras().isEmpty() && this.getIntent().getExtras().get("log_out") != null) {
             log_out = (boolean) Objects.requireNonNull(this.getIntent().getExtras()).get("log_out");
         }
         if(!log_out) {
