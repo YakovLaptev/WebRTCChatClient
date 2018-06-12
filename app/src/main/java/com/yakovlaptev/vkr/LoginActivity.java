@@ -31,7 +31,7 @@ import java.util.Objects;
 public class LoginActivity extends BaseActivity implements
         View.OnClickListener {
 
-    public static final String SERVER = "http://vkrserver-env.hdnu6ttdsc.eu-west-3.elasticbeanstalk.com/:8080";
+    public static final String SERVER = "http://vkrserver-env.hdnu6ttdsc.eu-west-3.elasticbeanstalk.com:8080";
     private static final String TAG = "EmailPassword";
 
     //private TextView mStatusTextView;

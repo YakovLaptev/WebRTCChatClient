@@ -136,7 +136,7 @@ public class JSONParser {
                     }
                     is.close();
                     json = sb.toString();
-                    //Log.d("JSON", json.toString());
+                    Log.d("JSON", json);
 
                 } catch (Exception e) {
                     Log.e("Buffer Error", "Error converting result " + e.toString());
@@ -160,7 +160,7 @@ public class JSONParser {
         synchronized (this) {
             t.start();
             try {
-                wait(1000);
+                wait(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
