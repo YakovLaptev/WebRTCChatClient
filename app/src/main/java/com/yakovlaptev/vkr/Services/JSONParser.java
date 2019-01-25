@@ -100,11 +100,15 @@ public class JSONParser {
                     if (Objects.equals(method, "POST")) {
                         DefaultHttpClient httpClient = new DefaultHttpClient();
                         HttpPost httpPost = new HttpPost(url);
-                        httpPost.setHeader("Content-type", "application/json");
+                        httpPost.setHeader("content-type", "application/json");
 
                         StringEntity se = new StringEntity(jsonObject.toString());
                         se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
                         httpPost.setEntity(se);
+
+
+                        Log.d("REQUEST",  httpPost.getAllHeaders()[0].toString());
+
 
                         HttpResponse httpResponse = httpClient.execute(httpPost);
                         HttpEntity httpEntity = httpResponse.getEntity();
